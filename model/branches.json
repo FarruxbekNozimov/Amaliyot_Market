@@ -7,6 +7,12 @@
 	},
 	{
 		"branchId": 2,
+		"name": "Makro Chimboy",
+		"address": "Chimboy, Markaz",
+		"marketId": 1
+	},
+	{
+		"branchId": 3,
 		"name": "Karzika chilonzor",
 		"address": "Yunusuobod, Chilonzor metro",
 		"marketId": 2

@@ -51,4 +51,33 @@ router.delete("/markets/:id", AuthMiddleware, (req, res) => {
 	res.end("Deleted successfully");
 });
 
+router.get("/markets/:id", AuthMiddleware, (req, res) => {
+	let markets = fileRead("markets");
+	let branches = fileRead("branches");
+	let workers = fileRead("workers");
+	let products = fileRead("products");
+	let result = [];
+
+	for (let i = 0; i < markets.length; i++) {
+		if (markets[i].marketId == req.params.id) {
+			result.push(markets[i]);
+			result[i]["branches"] = [];
+			for (let j = 0; j < branches.length; j++) {
+				result[i]["branches"][j] = [];
+				if (branches[j].marketId == markets[i].marketId) {
+					delete branches[j].marketId;
+					result[i]["branches"].push(branches[j]);
+					result[i]["branches"][j]["workers"] = [];
+					for (let l = 0; l < workers.length; l++) {
+						if (workers[l].branchId == branches[j].branchId) {
+							result[i]["branches"][j]["workers"].push(workers[l]);
+						}
+					}
+				}
+			}
+		}
+	}
+	res.header("Content-Type", "text/json");
+	res.end(JSON.stringify(result));
+});
 module.exports = router;

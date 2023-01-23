@@ -9,6 +9,7 @@ app.use(express.json());
 const AuthRoute = require("./routes/auth.js");
 const MarketRoute = require("./routes/market.js");
 
+app.use(express.json());
 app.use(AuthRoute);
 
 // Middleware
