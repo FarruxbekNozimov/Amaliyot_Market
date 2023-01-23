@@ -10,7 +10,8 @@ var _require = require("express"),
     Router = _require.Router;
 
 var _require2 = require("../fs/fileUtil"),
-    fileRead = _require2.fileRead;
+    fileRead = _require2.fileRead,
+    fileWrite = _require2.fileWrite;
 
 var router = Router();
 
@@ -33,5 +34,13 @@ router.get("/markets", AuthMiddleware, function (req, res) {
   }
 
   res.end(JSON.stringify(result));
+});
+router.post("/markets", AuthMiddleware, function (req, res) {
+  var markets = fileRead("markets");
+  markets.push(_objectSpread({
+    marketId: markets[markets.length - 1].marketId + 1
+  }, req.body));
+  fileWrite("markets", markets);
+  res.end("Created successfully");
 });
 module.exports = router;
