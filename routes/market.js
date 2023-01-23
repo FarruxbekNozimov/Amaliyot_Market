@@ -40,4 +40,15 @@ router.put("/markets/:id", AuthMiddleware, (req, res) => {
 	res.end("Updated successfully");
 });
 
+router.delete("/markets/:id", AuthMiddleware, (req, res) => {
+	let markets = fileRead("markets");
+	for (let i = 0; i < markets.length; i++) {
+		if (markets[i].marketId == req.params.id) {
+			markets.splice(i, 1);
+		}
+	}
+	fileWrite("markets", markets);
+	res.end("Deleted successfully");
+});
+
 module.exports = router;

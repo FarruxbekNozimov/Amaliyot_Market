@@ -55,4 +55,16 @@ router.put("/markets/:id", AuthMiddleware, function (req, res) {
   fileWrite("markets", markets);
   res.end("Updated successfully");
 });
+router["delete"]("/markets/:id", AuthMiddleware, function (req, res) {
+  var markets = fileRead("markets");
+
+  for (var i = 0; i < markets.length; i++) {
+    if (markets[i].marketId == req.params.id) {
+      markets.splice(i, 1);
+    }
+  }
+
+  fileWrite("markets", markets);
+  res.end("Deleted successfully");
+});
 module.exports = router;
