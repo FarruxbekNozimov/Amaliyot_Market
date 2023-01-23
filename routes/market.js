@@ -29,4 +29,15 @@ router.post("/markets", AuthMiddleware, (req, res) => {
 	res.end("Created successfully");
 });
 
+router.put("/markets/:id", AuthMiddleware, (req, res) => {
+	let markets = fileRead("markets");
+	for (let i = 0; i < markets.length; i++) {
+		if (markets[i].marketId == req.params.id) {
+			markets[i] = { ...markets[i], ...req.body };
+		}
+	}
+	fileWrite("markets", markets);
+	res.end("Updated successfully");
+});
+
 module.exports = router;

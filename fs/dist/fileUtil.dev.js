@@ -9,8 +9,7 @@ var fileRead = function fileRead(fileName) {
 };
 
 var fileWrite = function fileWrite(fileName, data) {
-  console.log(data);
-  return fs.writeFileSync("./model/" + fileName + ".json", JSON.stringify(data, null, 4));
+  return fs.writeFileSync("./model/" + fileName + ".json", JSON.stringify(data, null, 2));
 };
 
 module.exports = {

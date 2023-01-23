@@ -11,10 +11,9 @@ let fileRead = (fileName) => {
 };
 
 let fileWrite = (fileName, data) => {
-	console.log(data);
 	return fs.writeFileSync(
 		"./model/" + fileName + ".json",
-		JSON.stringify(data, null, 4)
+		JSON.stringify(data, null, 2)
 	);
 };
 
