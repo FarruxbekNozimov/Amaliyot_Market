@@ -1,12 +1,12 @@
 const { fileRead } = require("../fs/fileUtil");
-const { generateJWTtoken, parseJwt } = require("../utils/token");
+const jwt = require("jsonwebtoken");
+const { generateJWTtoken } = require("../utils/token");
 
 let AuthMiddleware = function (req, res, next) {
 	let users = fileRead("users");
-	console.log("jwt", parseJwt(req.headers.token));
-	for (let i in users) {
-	}
-	res.end(req.headers.token);
+	let userId = jwt.verify(req.headers.token, "FarruxDEV");
+	for (let i in users) if (userId.userId == users[i].id) return next();
+	res.end("User not found");
 };
 
 module.exports = AuthMiddleware;

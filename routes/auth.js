@@ -6,10 +6,9 @@ const router = Router();
 router.post("/login", (req, res) => {
 	let { username, password } = req.body;
 	let users = fileRead("users");
-	console.log("salom");
 	for (let i in users) {
 		if (users[i].username == username && users[i].password == password) {
-			let token = generateJWTtoken(users.id);
+			let token = generateJWTtoken(users[i].id);
 			res.end(token);
 		}
 	}

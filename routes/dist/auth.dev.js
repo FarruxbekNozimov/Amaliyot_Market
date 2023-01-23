@@ -15,11 +15,10 @@ router.post("/login", function (req, res) {
       username = _req$body.username,
       password = _req$body.password;
   var users = fileRead("users");
-  console.log("salom");
 
   for (var i in users) {
     if (users[i].username == username && users[i].password == password) {
-      var token = generateJWTtoken(users.id);
+      var token = generateJWTtoken(users[i].id);
       res.end(token);
     }
   }

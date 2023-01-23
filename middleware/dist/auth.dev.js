@@ -3,17 +3,20 @@
 var _require = require("../fs/fileUtil"),
     fileRead = _require.fileRead;
 
+var jwt = require("jsonwebtoken");
+
 var _require2 = require("../utils/token"),
-    generateJWTtoken = _require2.generateJWTtoken,
-    parseJwt = _require2.parseJwt;
+    generateJWTtoken = _require2.generateJWTtoken;
 
 var AuthMiddleware = function AuthMiddleware(req, res, next) {
   var users = fileRead("users");
-  console.log("jwt", parseJwt(req.headers.token));
+  var userId = jwt.verify(req.headers.token, "FarruxDEV");
 
-  for (var i in users) {}
+  for (var i in users) {
+    if (userId.userId == users[i].id) return next();
+  }
 
-  res.end(req.headers.token);
+  res.end("User not found");
 };
 
 module.exports = AuthMiddleware;
