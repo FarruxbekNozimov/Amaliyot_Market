@@ -9,13 +9,15 @@ router.get("/markets", AuthMiddleware, (req, res) => {
 	let result = [];
 	for (let i = 0; i < markets.length; i++) {
 		result[i] = { ...markets[i] };
+		result[i]["branches"] = [];
 		for (let j = 0; j < branches.length; j++) {
 			if (branches[j].marketId == markets[i].marketId) {
-				result[i]["branches"] = branches[j];
-				delete result[i]["branches"].marketId;
+				delete branches[j].marketId;
+				result[i]["branches"].push(branches[j]);
 			}
 		}
 	}
+	res.header("Content-Type", "text/json");
 	res.end(JSON.stringify(result));
 });
 
@@ -56,27 +58,29 @@ router.get("/markets/:id", AuthMiddleware, (req, res) => {
 	let branches = fileRead("branches");
 	let workers = fileRead("workers");
 	let products = fileRead("products");
-	let result = [];
+	let result = {};
+	let isThere = markets.find((x) => x.marketId == req.params.id);
+	if (!isThere) return res.end("404 || This market not found");
+	result = { ...isThere };
 
-	for (let i = 0; i < markets.length; i++) {
-		if (markets[i].marketId == req.params.id) {
-			result.push(markets[i]);
-			result[i]["branches"] = [];
-			for (let j = 0; j < branches.length; j++) {
-				result[i]["branches"][j] = [];
-				if (branches[j].marketId == markets[i].marketId) {
-					delete branches[j].marketId;
-					result[i]["branches"].push(branches[j]);
-					result[i]["branches"][j]["workers"] = [];
-					for (let l = 0; l < workers.length; l++) {
-						if (workers[l].branchId == branches[j].branchId) {
-							result[i]["branches"][j]["workers"].push(workers[l]);
-						}
-					}
-				}
-			}
-		}
-	}
+	// SET ALL WITH FILTER
+	let findBranches =
+		branches.filter((x) => x.marketId == result.marketId) || [];
+	result["branches"] = findBranches;
+
+	result["branches"] = findBranches.map((x) => ({
+		...x,
+		workers: workers.filter((w) => w.branchId == x.branchId),
+		products: products.filter((w) => w.branchId == x.branchId),
+	}));
+
+	// DELETE SOME KEYS
+	result["branches"].forEach((i) => {
+		i["workers"].forEach((i) => delete i.branchId);
+		i["products"].forEach((i) => delete i.branchId);
+		delete i.marketId;
+	});
+
 	res.header("Content-Type", "text/json");
 	res.end(JSON.stringify(result));
 });

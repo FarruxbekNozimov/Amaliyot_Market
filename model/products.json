@@ -1,14 +1,26 @@
 [
-    {
-        "id": 1,
-        "title": "Olma",
-        "price": "100000",
-        "branchId": 1
-    },
-    {
-        "id": 2,
-        "title": "Anor",
-        "price": "200000",
-        "branchId": 2
-    }
+	{
+		"id": 1,
+		"title": "Olma",
+		"price": "100000",
+		"branchId": 1
+	},
+	{
+		"id": 2,
+		"title": "Anor",
+		"price": "200000",
+		"branchId": 2
+	},
+	{
+		"id": 3,
+		"title": "Banana",
+		"price": "1982300",
+		"branchId": 2
+	},
+	{
+		"id": 4,
+		"title": "Behi",
+		"price": "20123000",
+		"branchId": 3
+	}
 ]

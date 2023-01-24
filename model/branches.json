@@ -16,5 +16,11 @@
 		"name": "Karzika chilonzor",
 		"address": "Yunusuobod, Chilonzor metro",
 		"marketId": 2
+	},
+	{
+		"branchId": 3,
+		"name": "Look Shuhrat",
+		"address": "Qatortol, Chilonzor metro",
+		"marketId": 4
 	}
 ]

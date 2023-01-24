@@ -1,14 +1,26 @@
 [
-    {
-        "id": 1,
-        "name": "Eshmat",
-        "phoneNumber": "998901234567",
-        "branchId": 1
-    },
-    {
-        "id": 2,
-        "name": "Toshmat",
-        "phoneNumber": "998901234568",
-        "branchId": 2
-    }
+	{
+		"id": 1,
+		"name": "Eshmat",
+		"phoneNumber": "998901234567",
+		"branchId": 1
+	},
+	{
+		"id": 2,
+		"name": "G'anisher",
+		"phoneNumber": "998771234212",
+		"branchId": 2
+	},
+	{
+		"id": 3,
+		"name": "Toshmat",
+		"phoneNumber": "998901234568",
+		"branchId": 2
+	},
+	{
+		"id": 4,
+		"name": "Mamarayim",
+		"phoneNumber": "998901231231",
+		"branchId": 3
+	}
 ]

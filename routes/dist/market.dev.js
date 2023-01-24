@@ -24,15 +24,17 @@ router.get("/markets", AuthMiddleware, function (req, res) {
 
   for (var i = 0; i < markets.length; i++) {
     result[i] = _objectSpread({}, markets[i]);
+    result[i]["branches"] = [];
 
     for (var j = 0; j < branches.length; j++) {
       if (branches[j].marketId == markets[i].marketId) {
-        result[i]["branches"] = branches[j];
-        delete result[i]["branches"].marketId;
+        delete branches[j].marketId;
+        result[i]["branches"].push(branches[j]);
       }
     }
   }
 
+  res.header("Content-Type", "text/json");
   res.end(JSON.stringify(result));
 });
 router.post("/markets", AuthMiddleware, function (req, res) {
@@ -72,31 +74,37 @@ router.get("/markets/:id", AuthMiddleware, function (req, res) {
   var branches = fileRead("branches");
   var workers = fileRead("workers");
   var products = fileRead("products");
-  var result = [];
+  var result = {};
+  var isThere = markets.find(function (x) {
+    return x.marketId == req.params.id;
+  });
+  if (!isThere) return res.end("404 || This market not found");
+  result = _objectSpread({}, isThere); // SET ALL WITH FILTER
 
-  for (var i = 0; i < markets.length; i++) {
-    if (markets[i].marketId == req.params.id) {
-      result.push(markets[i]);
-      result[i]["branches"] = [];
+  var findBranches = branches.filter(function (x) {
+    return x.marketId == result.marketId;
+  }) || [];
+  result["branches"] = findBranches;
+  result["branches"] = findBranches.map(function (x) {
+    return _objectSpread({}, x, {
+      workers: workers.filter(function (w) {
+        return w.branchId == x.branchId;
+      }),
+      products: products.filter(function (w) {
+        return w.branchId == x.branchId;
+      })
+    });
+  }); // DELETE SOME KEYS
 
-      for (var j = 0; j < branches.length; j++) {
-        result[i]["branches"][j] = [];
-
-        if (branches[j].marketId == markets[i].marketId) {
-          delete branches[j].marketId;
-          result[i]["branches"].push(branches[j]);
-          result[i]["branches"][j]["workers"] = [];
-
-          for (var l = 0; l < workers.length; l++) {
-            if (workers[l].branchId == branches[j].branchId) {
-              result[i]["branches"][j]["workers"].push(workers[l]);
-            }
-          }
-        }
-      }
-    }
-  }
-
+  result["branches"].forEach(function (i) {
+    i["workers"].forEach(function (i) {
+      return delete i.branchId;
+    });
+    i["products"].forEach(function (i) {
+      return delete i.branchId;
+    });
+    delete i.marketId;
+  });
   res.header("Content-Type", "text/json");
   res.end(JSON.stringify(result));
 });
