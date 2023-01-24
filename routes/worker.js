@@ -10,4 +10,10 @@ router.get("/worker", AuthMiddleware, (req, res) => {
 	res.end(JSON.stringify(workers));
 });
 
+router.get("/worker/:id", AuthMiddleware, (req, res) => {
+	let workers = fileRead("workers").find((i) => i.id == req.params.id) || [];
+	res.header("Content-Type", "text/json");
+	res.end(JSON.stringify(workers));
+});
+
 module.exports = router;

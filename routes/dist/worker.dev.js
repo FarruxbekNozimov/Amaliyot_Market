@@ -19,4 +19,11 @@ router.get("/worker", AuthMiddleware, function (req, res) {
   res.header("Content-Type", "text/json");
   res.end(JSON.stringify(workers));
 });
+router.get("/worker/:id", AuthMiddleware, function (req, res) {
+  var workers = fileRead("workers").find(function (i) {
+    return i.id == req.params.id;
+  }) || [];
+  res.header("Content-Type", "text/json");
+  res.end(JSON.stringify(workers));
+});
 module.exports = router;
