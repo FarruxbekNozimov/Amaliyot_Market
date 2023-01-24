@@ -40,4 +40,16 @@ router.post("/worker", AuthMiddleware, function (req, res) {
   fileWrite("workers", workers);
   res.end("Created successfully");
 });
+router.put("/worker/:id", AuthMiddleware, function (req, res) {
+  var workers = fileRead("workers");
+
+  for (var i = 0; i < workers.length; i++) {
+    if (workers[i].id == req.params.id) {
+      workers[i] = _objectSpread({}, workers[i], {}, req.body);
+    }
+  }
+
+  fileWrite("workers", workers);
+  res.end("Updated successfully");
+});
 module.exports = router;

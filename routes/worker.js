@@ -26,4 +26,15 @@ router.post("/worker", AuthMiddleware, (req, res) => {
 	res.end("Created successfully");
 });
 
+router.put("/worker/:id", AuthMiddleware, (req, res) => {
+	let workers = fileRead("workers");
+	for (let i = 0; i < workers.length; i++) {
+		if (workers[i].id == req.params.id) {
+			workers[i] = { ...workers[i], ...req.body };
+		}
+	}
+	fileWrite("workers", workers);
+	res.end("Updated successfully");
+});
+
 module.exports = router;
