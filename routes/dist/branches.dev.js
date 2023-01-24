@@ -89,4 +89,16 @@ router.post("/branches", AuthMiddleware, function (req, res) {
   fileWrite("branches", branches);
   res.end("Created successfully");
 });
+router.put("/branches/:id", AuthMiddleware, function (req, res) {
+  var branches = fileRead("branches");
+
+  for (var i = 0; i < branches.length; i++) {
+    if (branches[i].branchId == req.params.id) {
+      branches[i] = _objectSpread({}, branches[i], {}, req.body);
+    }
+  }
+
+  fileWrite("branches", branches);
+  res.end("Updated successfully");
+});
 module.exports = router;
