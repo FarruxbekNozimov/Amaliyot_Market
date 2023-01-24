@@ -22,5 +22,11 @@
 		"name": "Look Shuhrat",
 		"address": "Qatortol, Chilonzor metro",
 		"marketId": 4
+	},
+	{
+		"branchId": 5,
+		"name": "Makro Yunusbodi",
+		"address": "Yunusobod",
+		"marketId": 1
 	}
 ]

@@ -8,7 +8,7 @@ var generateJWTtoken = function generateJWTtoken(userId) {
   var accessToken = jwt.sign({
     userId: userId
   }, KEY, {
-    expiresIn: "1h"
+    expiresIn: "1d"
   });
   return accessToken;
 };
