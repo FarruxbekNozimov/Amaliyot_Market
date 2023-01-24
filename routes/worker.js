@@ -16,4 +16,14 @@ router.get("/worker/:id", AuthMiddleware, (req, res) => {
 	res.end(JSON.stringify(workers));
 });
 
+router.post("/worker", AuthMiddleware, (req, res) => {
+	let workers = fileRead("workers");
+	workers.push({
+		id: workers[workers.length - 1].id + 1,
+		...req.body,
+	});
+	fileWrite("workers", workers);
+	res.end("Created successfully");
+});
+
 module.exports = router;
