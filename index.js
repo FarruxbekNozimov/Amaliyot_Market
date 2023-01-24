@@ -8,6 +8,7 @@ app.use(express.json());
 // Routes
 const AuthRoute = require("./routes/auth.js");
 const MarketRoute = require("./routes/market.js");
+const BranchesRoute = require("./routes/branches.js");
 
 app.use(express.json());
 app.use(AuthRoute);
@@ -15,5 +16,6 @@ app.use(AuthRoute);
 // Middleware
 app.use(MarketRoute);
 app.use(AuthMiddleware);
+app.use(BranchesRoute);
 
 app.listen(PORT, () => console.log("Server is running on port", PORT));
