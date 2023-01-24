@@ -52,4 +52,16 @@ router.put("/worker/:id", AuthMiddleware, function (req, res) {
   fileWrite("workers", workers);
   res.end("Updated successfully");
 });
+router["delete"]("/worker/:id", AuthMiddleware, function (req, res) {
+  var workers = fileRead("workers");
+
+  for (var i = 0; i < workers.length; i++) {
+    if (workers[i].id == req.params.id) {
+      workers.splice(i, 1);
+    }
+  }
+
+  fileWrite("workers", workers);
+  res.end("Deleted successfully");
+});
 module.exports = router;

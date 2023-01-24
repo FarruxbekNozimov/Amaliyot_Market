@@ -37,4 +37,15 @@ router.put("/worker/:id", AuthMiddleware, (req, res) => {
 	res.end("Updated successfully");
 });
 
+router.delete("/worker/:id", AuthMiddleware, (req, res) => {
+	let workers = fileRead("workers");
+	for (let i = 0; i < workers.length; i++) {
+		if (workers[i].id == req.params.id) {
+			workers.splice(i, 1);
+		}
+	}
+	fileWrite("workers", workers);
+	res.end("Deleted successfully");
+});
+
 module.exports = router;
