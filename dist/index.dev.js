@@ -15,12 +15,15 @@ var MarketRoute = require("./routes/market.js");
 
 var BranchesRoute = require("./routes/branches.js");
 
+var WorkersRoute = require("./routes/worker.js");
+
 app.use(express.json());
 app.use(AuthRoute); // Middleware
 
 app.use(MarketRoute);
 app.use(AuthMiddleware);
 app.use(BranchesRoute);
+app.use(WorkersRoute);
 app.listen(PORT, function () {
   return console.log("Server is running on port", PORT);
 });
