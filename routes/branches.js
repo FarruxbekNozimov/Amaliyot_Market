@@ -83,4 +83,16 @@ router.put("/branches/:id", AuthMiddleware, (req, res) => {
 	fileWrite("branches", branches);
 	res.end("Updated successfully");
 });
+
+router.delete("/branches/:id", AuthMiddleware, (req, res) => {
+	let branches = fileRead("branches");
+	for (let i = 0; i < branches.length; i++) {
+		if (branches[i].branchId == req.params.id) {
+			branches.splice(i, 1);
+		}
+	}
+	fileWrite("branches", branches);
+	res.end("Deleted successfully");
+});
+
 module.exports = router;

@@ -84,4 +84,5 @@ router.get("/markets/:id", AuthMiddleware, (req, res) => {
 	res.header("Content-Type", "text/json");
 	res.end(JSON.stringify(result));
 });
+
 module.exports = router;

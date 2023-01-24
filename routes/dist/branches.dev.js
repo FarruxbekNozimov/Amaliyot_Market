@@ -101,4 +101,16 @@ router.put("/branches/:id", AuthMiddleware, function (req, res) {
   fileWrite("branches", branches);
   res.end("Updated successfully");
 });
+router["delete"]("/branches/:id", AuthMiddleware, function (req, res) {
+  var branches = fileRead("branches");
+
+  for (var i = 0; i < branches.length; i++) {
+    if (branches[i].branchId == req.params.id) {
+      branches.splice(i, 1);
+    }
+  }
+
+  fileWrite("branches", branches);
+  res.end("Deleted successfully");
+});
 module.exports = router;
