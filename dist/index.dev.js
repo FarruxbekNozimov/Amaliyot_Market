@@ -17,6 +17,8 @@ var BranchesRoute = require("./routes/branches.js");
 
 var WorkersRoute = require("./routes/worker.js");
 
+var ProductsRoute = require("./routes/products.js");
+
 app.use(express.json());
 app.use(AuthRoute); // Middleware
 
@@ -24,6 +26,7 @@ app.use(MarketRoute);
 app.use(AuthMiddleware);
 app.use(BranchesRoute);
 app.use(WorkersRoute);
+app.use(ProductsRoute);
 app.listen(PORT, function () {
   return console.log("Server is running on port", PORT);
 });

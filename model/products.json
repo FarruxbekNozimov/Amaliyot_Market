@@ -22,5 +22,11 @@
 		"title": "Behi",
 		"price": "20123000",
 		"branchId": 3
+	},
+	{
+		"id": 5,
+		"title": "Piyoz",
+		"price": "200000",
+		"branchId": 2
 	}
 ]
